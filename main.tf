@@ -1,5 +1,13 @@
-# terraform state file setup
-# create an S3 bucket to store the state file in
+# terraform state setup
+
+terraform {
+  backend "s3" {
+    encrypt = true
+    region = "us-west-2"
+    profile = "stellaris"
+    key = "us-west-2"
+  }
+}
 
 provider "aws" {
   region = "us-west-2"
@@ -10,11 +18,7 @@ module "s3-backend" {
   source = "modules/s3-backend"
 }
 
-terraform {
-  backend "s3" {
-    encrypt = true
-    region = "us-west-2"
-    profile = "stellaris"
-    key = "us-west-2"
-  }
+resource "aws_kms_key" "kms-key" {
+    description = "stellaris-insights-kms-key"
+    enable_key_rotation = true
 }

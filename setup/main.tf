@@ -1,3 +1,4 @@
+# terraform state resources setup
 provider "aws" {
   region = "us-west-2"
   profile = "stellaris"

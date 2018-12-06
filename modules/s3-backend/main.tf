@@ -1,4 +1,5 @@
-# terraform state file setup
+# terraform state resources setup
+
 # create an S3 bucket to store the state file in
 resource "aws_s3_bucket" "terraform-state-storage-s3" {
   bucket = "stellaris-insights-terraform-remote-state-storage-s3"
@@ -37,6 +38,7 @@ resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
   }
 }
 
+# outputs for access to names
 output "s3-bucket" {
   value = "${aws_s3_bucket.terraform-state-storage-s3.bucket}"
 }
