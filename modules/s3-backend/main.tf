@@ -1,12 +1,5 @@
 # terraform state file setup
 # create an S3 bucket to store the state file in
-
-provider "aws" {
-  region = "us-west-2"
-  profile = "stellaris"
-}
-
-# create an S3 bucket to store the state file in
 resource "aws_s3_bucket" "terraform-state-storage-s3" {
   bucket = "stellaris-insights-terraform-remote-state-storage-s3"
 
@@ -34,8 +27,21 @@ resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
     name = "LockID"
     type = "S"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
  
   tags {
     Name = "DynamoDB Terraform State Lock Table"
   }
 }
+
+output "s3-bucket" {
+  value = "${aws_s3_bucket.terraform-state-storage-s3.bucket}"
+}
+
+output "dynamodb-table" {
+  value = "${aws_dynamodb_table.dynamodb-terraform-state-lock.name}"
+}
+

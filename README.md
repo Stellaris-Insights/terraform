@@ -2,14 +2,17 @@
 
 ## Initial setup (One time)
 
-1. `cd s3-backend`
-2. Configure bucket name (These are unique in all of AWS)
-3. `terraform init`
-4. `terraform apply`
-5. `cd ../`
-6. Configure bucket name (Same name from step 2)
-7. `terraform init`
-8. `terraform apply`
+1. Configure bucket name in modules/s3-backend/main.tf (These are unique in all of AWS)
+2. `cd setup`
+3. `terraform get`
+4. `terraform init`
+5. `terraform apply`
+6. `cp terraform.tfstate ../`
+7. `terraform output > ../config.backend`
+8. `cd ../`
+9. `terraform get`
+10. `terraform init -backend-config=./config.backend`
+11. `terraform apply`
 
 ### Caveats
 
